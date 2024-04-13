@@ -87,9 +87,6 @@ commander_map('n', '<leader>g', ':Telescope find_files<CR>', 'Telescope (Fuzzy s
 commander_map('n', '<leader>f', '<CMD> lua require("arena").toggle()<CR>', 'Arena Fecency')
 commander_map('n', '<C-f>', ':Telescope live_grep<CR>', 'Telescope (Grep in files)')
 
--- Packer Sync
-commander_map('n', '<C-p>', ':PackerSync<CR>', 'Packer (Sync)')
-
 -- Fterm (floating terminal)
 commander_map('n', '<leader>b', '<CMD>lua require("FTerm").toggle()<CR>', 'Open Terminal')
 map('t', '<Esc>', '<CMD>lua require("FTerm").toggle()<CR>')
@@ -165,11 +162,7 @@ M.register_zk_keymaps = function()
   -- Search for the notes matching the current visual selection.
   map('v', '<leader>zf', ":'<,'>ZkMatch<CR>")
   -- Create a new note after asking for its title.
-  map(
-    'n',
-    '<leader>zn',
-    ':lua require("extensions/my_zk").create_zettel_of_type("archive")<CR>'
-  )
+  map('n', '<leader>zn', ':lua require("extensions/my_zk").create_zettel_of_type("archive")<CR>')
   map('n', '<leader>zzn', ':lua require("extensions/my_zk").create_zettel()<CR>')
   -- Create a new note in the same directory as the current buffer, using the current selection for title.
   map('v', '<leader>znt', ":'<,'>ZkNewFromTitleSelection { dir = vim.fn.expand('%:p:h') }<CR>")

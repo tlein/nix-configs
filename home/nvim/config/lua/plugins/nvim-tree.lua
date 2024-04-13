@@ -16,6 +16,9 @@ require('nvim-tree').setup({
   },
   filters = {
     dotfiles = true,
+    custom = {
+      '*.meta',
+    },
   },
   on_attach = function(bufnr)
     local api = require('nvim-tree.api')

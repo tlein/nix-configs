@@ -31,7 +31,12 @@ in
         ack
         curl
         wget
+
+        # Zettelkasten cli tool
         zk
+
+        # Lua external formatter
+        stylua
       ] ++ optionals cfg.includeFonts [
         # Fonts
         nerdfonts

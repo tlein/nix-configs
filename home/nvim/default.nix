@@ -9,6 +9,7 @@ with lib;
     vimdiffAlias = true;
 
     plugins = with pkgs.vimPlugins; [
+      # File explorer
       nvim-tree-lua
 
       # Quick actions fuzzy
@@ -57,6 +58,21 @@ with lib;
 
       # Better ui option and select
       dressing-nvim
+
+      # Better comment block functionality
+      comment-nvim
+
+      # Auto-dark-mode switching in at least macOS
+      auto-dark-mode-nvim
+
+      # Shows the entire line my cursor is on
+      nvim-cursorline
+
+      # the lsp virtual text bothers me, goes too far off the page. this stacks them
+      lsp_lines-nvim
+
+      # puts virtual symbols on indentation scopes
+      indent-blankline-nvim
     ];
 
     extraPackages = with pkgs; [

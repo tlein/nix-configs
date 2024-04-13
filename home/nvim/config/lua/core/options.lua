@@ -44,8 +44,8 @@ vim.wo.wrap = false -- Turn off word wrap
 -- Tabs, indent
 -----------------------------------------------------------
 vim.opt.expandtab = true -- Use spaces instead of tabs
-vim.opt.shiftwidth = 2 -- Shift 4 spaces when tab
-vim.opt.tabstop = 2 -- 1 tab == 4 spaces
+vim.opt.shiftwidth = 4 -- Shift 4 spaces when tab
+vim.opt.tabstop = 4 -- 1 tab == 4 spaces
 vim.opt.smartindent = true -- Autoindent new lines
 
 -----------------------------------------------------------

@@ -1,5 +1,4 @@
-{ config, pkgs, lib, ... }:
-with lib;
+{ pkgs, ... }:
 {
   programs.zsh = {
     enable = true;
@@ -24,6 +23,9 @@ with lib;
     initExtra = ''
       eval "$(direnv hook zsh)"
       [[ ! -f ${./p10k.zsh} ]] || source ${./p10k.zsh}
+
+      ## Squatbot
+      export SQUATBOT_HOME=$HOME/Code/ILikeDucks/squatbot
     '';
 
     plugins = [

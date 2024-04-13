@@ -3,12 +3,13 @@ local M = {}
 local lspconfig = require('lspconfig')
 local cmp = require('cmp')
 local cmp_nvim_lsp = require('cmp_nvim_lsp')
+local null_ls = require('null-ls')
 local luasnip = require('luasnip')
 
 cmp.setup({
   sources = {
     { name = 'nvim_lsp' },
-    { name = 'luasnip' }
+    { name = 'luasnip' },
   },
   mapping = cmp.mapping.preset.insert({
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
@@ -41,7 +42,7 @@ cmp.setup({
     expand = function(args)
       luasnip.lsp_expand(args.body)
     end,
-  }
+  },
 })
 
 M.my_on_attach = function(_, bufnr)
@@ -84,6 +85,7 @@ local filetypes_to_ignore_formatting_for = teg.create_set_from_table({
   'text',
   'markdown',
   'cmake',
+  'gdshader', -- unity's shaders are being categorized as gdshader for some reason, preference for Godot maybe
 })
 
 -- Uses `vim.fn.fnamemodify(vim.fn.getcwd(), ':t')` to get the dirname of the cwd (last part of
@@ -92,10 +94,19 @@ local filetypes_to_ignore_formatting_for = teg.create_set_from_table({
 local projects_to_allow_formatting_for = teg.create_set_from_table({
   'teg',
   'dotfiles',
+  'nix-configs',
   'squatbot',
   'ancona',
   'jat', -- rufus game
   'parallel_programming_course',
+  'GameJamPrep',
+  'UnitySkybox',
+})
+
+null_ls.setup({
+  sources = {
+    null_ls.builtins.formatting.stylua,
+  },
 })
 
 local TjlFormatOnSaveGroup =
@@ -112,7 +123,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
     end
 
     local project_dirname = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
-    if projects_to_allow_formatting_for[string.lower(project_dirname)] == nil then
+    if projects_to_allow_formatting_for[project_dirname] == nil then
       teg.notify_trace(
         'This project ('
           .. project_dirname
@@ -122,7 +133,9 @@ vim.api.nvim_create_autocmd('BufWritePre', {
       return
     end
 
-    teg.notify_trace('Attempting to format in project ' .. project_dirname .. ', filetype: ' .. vim.bo.filetype)
+    teg.notify_trace(
+      'Attempting to format in project ' .. project_dirname .. ', filetype: ' .. vim.bo.filetype
+    )
     vim.lsp.buf.format()
   end,
   group = TjlFormatOnSaveGroup,
@@ -160,6 +173,22 @@ lspconfig.lua_ls.setup({
       format = { enable = false },
     },
   },
+})
+
+lspconfig.nil_ls.setup({
+  on_attach = M.my_on_attach,
+  capabilities = M.my_capabilities,
+})
+
+local pid = vim.fn.getpid()
+local omnisharp_bin = 'OmniSharp'
+lspconfig.omnisharp.setup({
+  on_attach = M.my_on_attach,
+  capabilities = M.my_capabilities,
+  flags = {
+    debounce_text_changes = 150,
+  },
+  cmd = { omnisharp_bin, '--languageserver', '--hostPID', tostring(pid) },
 })
 
 return M
