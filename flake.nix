@@ -13,6 +13,10 @@
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -73,6 +77,30 @@
           };
         }
       ];
+      nixosModules = { user, host }: with inputs; [
+        # Main `nixos` config
+        (./. + "/hosts/${host}/configuration.nix")
+        # `home-manager` module
+        home-manager.nixosModules.home-manager
+        {
+          nixpkgs = nixpkgsConfig;
+          # Pins channels and flake registry to use the same nixpkgs as this flake.
+          nix.registry = nixpkgs.lib.mapAttrs (_: value: { flake = value; }) inputs;
+          # `home-manager` config
+          users.users.${user} = {
+            home = "/home/${user}";
+            isNormalUser = true;
+            extraGroups = [ "wheel" ];
+          };
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            users.${user} = import (./. + "/hosts/${host}/home.nix");
+            sharedModules = [
+            ];
+          };
+        }
+      ];
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
@@ -86,6 +114,19 @@
               host = "macos-personal-laptop";
             };
             specialArgs = { inherit inputs nixpkgs; };
+          };
+        };
+        nixosConfigurations = {
+          wsl-windows11-desktop = nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = nixosModules {
+              user = "nixos";
+              host = "wsl-windows11-desktop";
+            };
+            # defaultModules = false;
+            extraModules = [
+              inputs.nixos-wsl.nixosModules.wsl
+            ];
           };
         };
       };

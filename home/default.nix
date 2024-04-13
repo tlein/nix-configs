@@ -12,7 +12,9 @@ in
     ./direnv
   ];
 
+
   options.my-home = {
+    defaultUserShell = pkgs.zsh;
     includeFonts = lib.mkEnableOption "fonts";
   };
 
