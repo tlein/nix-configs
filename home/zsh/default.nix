@@ -4,7 +4,7 @@ with lib;
   programs.zsh = {
     enable = true;
     enableCompletion = false;
-    enableAutosuggestions = false;
+    autosuggestion.enable = false;
     syntaxHighlighting.enable = false;
     dotDir = ".config/zsh";
 

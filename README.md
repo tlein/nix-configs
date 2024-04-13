@@ -79,8 +79,8 @@ darwin-rebuild switch --flake ".#macos-personal-laptop"
 
 ### On NixOS:
 ```shell
-sudo nixos-rebuild build --flake ".#macos-personal-laptop"
-sudo nixos-rebuild switch --flake ".#macos-personal-laptop"
+sudo nixos-rebuild build --flake ".#wsl-windows11-desktop"
+sudo nixos-rebuild switch --flake ".#wsl-windows11-desktop"
 ```
 
 # Creating new configurations
