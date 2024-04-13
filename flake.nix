@@ -93,7 +93,11 @@
           #   group = "${user}";
           #   extraGroups = [ "wheel" ];
           # };
-          users.users.${user}.home = "/home/${user}";
+          users.users.${user} = {
+            home = "/home/${user}";
+            isNormalUser = true;
+            extraGroups = [ "wheel" ];
+          };
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
@@ -127,9 +131,6 @@
             };
             # defaultModules = false;
             extraModules = [
-              # ./wsl
-              # ../nixos/fonts.nix
-              # ../nixos/nixconfig.nix
               inputs.nixos-wsl.nixosModules.wsl
             ];
           };
