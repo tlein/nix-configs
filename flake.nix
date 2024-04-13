@@ -87,12 +87,6 @@
           # Pins channels and flake registry to use the same nixpkgs as this flake.
           nix.registry = nixpkgs.lib.mapAttrs (_: value: { flake = value; }) inputs;
           # `home-manager` config
-          # users.users.${user} = {
-          #   home = "/home/${user}";
-          #   isNormalUser = true;
-          #   group = "${user}";
-          #   extraGroups = [ "wheel" ];
-          # };
           users.users.${user} = {
             home = "/home/${user}";
             isNormalUser = true;
