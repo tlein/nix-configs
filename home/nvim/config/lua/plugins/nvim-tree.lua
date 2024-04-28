@@ -25,6 +25,10 @@ require('nvim-tree').setup({
     api.config.mappings.default_on_attach(bufnr)
     local opts = { buffer = bufnr }
 
+    -- Ok, you're unsetting the bookmark-related functionality of nvim-tree here. I don't
+    -- really remember *why* I did this, but I'm leaving it because it was probably enough
+    -- of a pain-in-the-ass to hunt down before and frustrating enough to want me to hunt
+    -- it down.
     vim.keymap.set('n', 'bd', '', opts)
     vim.keymap.del('n', 'bd', opts)
     vim.keymap.set('n', 'bt', '', opts)

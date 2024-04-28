@@ -101,6 +101,7 @@ local projects_to_allow_formatting_for = teg.create_set_from_table({
   'parallel_programming_course',
   'GameJamPrep',
   'UnitySkybox',
+  'kibble',
 })
 
 null_ls.setup({
