@@ -1,8 +1,7 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, lib, ... }:
 with lib;
 {
   programs.neovim = {
-    package = pkgs.neovim-nightly;
     enable = true;
     viAlias = true;
     vimAlias = true;
@@ -15,6 +14,9 @@ with lib;
       # Quick actions fuzzy
       telescope-nvim
       commander-nvim
+
+      # Enable passing through ripgrep flags from telescope
+      telescope-live-grep-args-nvim
 
       # Color theme
       catppuccin-nvim
@@ -73,6 +75,16 @@ with lib;
 
       # puts virtual symbols on indentation scopes
       indent-blankline-nvim
+
+      # more precise word traversal, so stuff like camelCase and PascalCase and snake_case will let
+      # me move through them as I expect to be able to using w/b/e (hint, use this comment as a
+      # test of the capabilities of the movement, the leader for the more precise moment is
+      # currently `,` aka comma. If this doesn't work maybe check the plugin init file and update 
+      # this comment if it is wrong here)
+      vim-wordmotion
+
+      # renders markdown files in the browser
+      markdown-preview-nvim
     ];
 
     extraPackages = with pkgs; [
@@ -84,6 +96,7 @@ with lib;
       lua-language-server
       rust-analyzer
       nil # Nix
+      typescript
     ];
 
     extraConfig = ''

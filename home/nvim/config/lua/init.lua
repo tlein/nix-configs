@@ -14,6 +14,7 @@ require('core/autocmds')
 
 ------------------------------------------
 -- Load plugin settings
+require('plugins/vim-wordmotion')
 require('plugins/lsp-config')
 require('plugins/nvim-treesitter')
 require('plugins/nvim-tree')

@@ -32,6 +32,8 @@ vim.opt.termguicolors = true -- Enable 24-bit RGB colors
 vim.opt.laststatus = 3 -- Set global statusline
 vim.opt.list = true
 vim.opt.listchars:append('space:⋅')
+vim.opt.relativenumber = true
+vim.o.statuscolumn = '%s %l %r '
 
 -- THIS IS ALSO SET IN tjl/core/autocmds.lua!
 vim.wo.wrap = false -- Turn off word wrap

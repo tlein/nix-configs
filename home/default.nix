@@ -31,6 +31,8 @@ in
         ack
         curl
         wget
+        ngrep
+        ffmpeg
 
         # Zettelkasten cli tool
         zk

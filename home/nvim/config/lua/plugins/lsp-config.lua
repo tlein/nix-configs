@@ -102,6 +102,7 @@ local projects_to_allow_formatting_for = teg.create_set_from_table({
   'GameJamPrep',
   'UnitySkybox',
   'kibble',
+  'WineStoreCards',
 })
 
 null_ls.setup({
@@ -145,6 +146,22 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 lspconfig.rust_analyzer.setup({
   on_attach = M.my_on_attach,
   capabilities = M.my_capabilities,
+  settings = {
+    ['rust-analyzer'] = {
+      check = {
+        features = 'embedded_watcher',
+      },
+      cargo = {
+        features = 'embedded_watcher',
+      },
+      diagnostic = {
+        refreshSupport = false,
+      },
+      procMacro = {
+        enable = true,
+      },
+    },
+  },
 })
 
 lspconfig.lua_ls.setup({
@@ -176,6 +193,11 @@ lspconfig.lua_ls.setup({
   },
 })
 
+lspconfig.tsserver.setup({
+  on_attach = M.my_on_attach,
+  capabilities = M.my_capabilities,
+})
+
 lspconfig.nil_ls.setup({
   on_attach = M.my_on_attach,
   capabilities = M.my_capabilities,
@@ -190,6 +212,11 @@ lspconfig.omnisharp.setup({
     debounce_text_changes = 150,
   },
   cmd = { omnisharp_bin, '--languageserver', '--hostPID', tostring(pid) },
+})
+
+lspconfig.wgsl_analyzer.setup({
+  on_attach = M.my_on_attach,
+  capabilities = M.my_capabilities,
 })
 
 return M

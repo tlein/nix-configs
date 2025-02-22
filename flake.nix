@@ -33,7 +33,7 @@
           allowUnfree = true;
         };
         overlays = [
-          neovim-nightly-overlay.overlay
+          inputs.neovim-nightly-overlay.overlays.default
           # "pkgs" currently points to unstable
           # The following overlay allows you to specify "pkgs.stable" for stable versions
           # and "pkgs.master" for versions on master

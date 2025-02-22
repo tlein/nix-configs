@@ -84,8 +84,14 @@ map('n', '<leader>ts', ":let &background=(&background == 'light' ? 'dark' : 'lig
 -- Telescope Maps
 map('n', '<leader>c', ':Telescope commander<CR>')
 commander_map('n', '<leader>g', ':Telescope find_files<CR>', 'Telescope (Fuzzy search files)')
+commander_map('n', '<leader>tr', ':Telescope resume<CR>', 'Telescope (last search)')
 commander_map('n', '<leader>f', '<CMD> lua require("arena").toggle()<CR>', 'Arena Fecency')
-commander_map('n', '<C-f>', ':Telescope live_grep<CR>', 'Telescope (Grep in files)')
+commander_map(
+  'n',
+  '<C-f>',
+  ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
+  'Telescope (Grep in files)'
+)
 
 -- Fterm (floating terminal)
 commander_map('n', '<leader>b', '<CMD>lua require("FTerm").toggle()<CR>', 'Open Terminal')
