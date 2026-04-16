@@ -1,11 +1,17 @@
 { ... }:
 {
   programs = {
+
     git = {
+
       enable = true;
 
-      userName = "Tucker Lein";
-      userEmail = "self@tuckerle.in";
+      signing.format = "openpgp";
+
+      settings.user = {
+        name = "Tucker Lein";
+        email = "self@tuckerle.in";
+      };
 
       ignores = [
         # macOS

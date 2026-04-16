@@ -1,15 +1,13 @@
 local M = {}
 
-local lspconfig = require('lspconfig')
 local cmp = require('cmp')
 local cmp_nvim_lsp = require('cmp_nvim_lsp')
 local null_ls = require('null-ls')
-local luasnip = require('luasnip')
+local lspconfig = require('lspconfig')
 
 cmp.setup({
   sources = {
     { name = 'nvim_lsp' },
-    { name = 'luasnip' },
   },
   mapping = cmp.mapping.preset.insert({
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
@@ -22,8 +20,6 @@ cmp.setup({
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
       else
         fallback()
       end
@@ -31,18 +27,11 @@ cmp.setup({
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
       else
         fallback()
       end
     end, { 'i', 's' }),
   }),
-  snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body)
-    end,
-  },
 })
 
 M.my_on_attach = function(_, bufnr)
@@ -193,25 +182,9 @@ lspconfig.lua_ls.setup({
   },
 })
 
-lspconfig.tsserver.setup({
-  on_attach = M.my_on_attach,
-  capabilities = M.my_capabilities,
-})
-
 lspconfig.nil_ls.setup({
   on_attach = M.my_on_attach,
   capabilities = M.my_capabilities,
-})
-
-local pid = vim.fn.getpid()
-local omnisharp_bin = 'OmniSharp'
-lspconfig.omnisharp.setup({
-  on_attach = M.my_on_attach,
-  capabilities = M.my_capabilities,
-  flags = {
-    debounce_text_changes = 150,
-  },
-  cmd = { omnisharp_bin, '--languageserver', '--hostPID', tostring(pid) },
 })
 
 lspconfig.wgsl_analyzer.setup({

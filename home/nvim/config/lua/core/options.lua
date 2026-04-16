@@ -15,7 +15,6 @@ vim.g.did_load_filetypes = false -- new native filetype, opt-in preview mode cur
 -----------------------------------------------------------
 -- Neovim UI
 -----------------------------------------------------------
-vim.opt.number = true -- Show line number
 vim.opt.showmatch = true -- Highlight matching parenthesis
 vim.opt.foldmethod = 'marker' -- Enable folding (default 'foldmarker')
 vim.opt.foldlevel = 20 -- Enable folding (default 'foldmarker')
@@ -32,8 +31,9 @@ vim.opt.termguicolors = true -- Enable 24-bit RGB colors
 vim.opt.laststatus = 3 -- Set global statusline
 vim.opt.list = true
 vim.opt.listchars:append('space:⋅')
+vim.opt.number = true -- Show line number
 vim.opt.relativenumber = true
-vim.o.statuscolumn = '%s %l %r '
+vim.opt.statuscolumn = '%s %{v:relnum} %{v:lnum} '
 
 -- THIS IS ALSO SET IN tjl/core/autocmds.lua!
 vim.wo.wrap = false -- Turn off word wrap

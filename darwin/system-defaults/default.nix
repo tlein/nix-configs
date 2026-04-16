@@ -5,6 +5,8 @@
     remapCapsLockToControl = true;
   };
 
+  system.primaryUser = "tucker";
+
   system.defaults = {
     dock = {
       orientation = "bottom";

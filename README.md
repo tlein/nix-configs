@@ -73,8 +73,8 @@ To rebuild after making changes:
 ### On Darwin
 
 ```shell
-darwin-rebuild build --flake ".#macos-personal-laptop"
-darwin-rebuild switch --flake ".#macos-personal-laptop"
+sudo darwin-rebuild build --flake ".#macos-personal-laptop"
+sudo darwin-rebuild switch --flake ".#macos-personal-laptop"
 ```
 
 ### On NixOS:

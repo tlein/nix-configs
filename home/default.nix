@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
 let
   cfg = config.my-home;
@@ -26,23 +31,25 @@ in
         PAGER = "less";
       };
 
-      packages = with pkgs; [
-        # command line utilities
-        ack
-        curl
-        wget
-        ngrep
-        ffmpeg
+      packages =
+        with pkgs;
+        [
+          # command line utilities
+          ack
+          curl
+          wget
+          ngrep
+          ffmpeg
+          fastfetch
 
-        # Zettelkasten cli tool
-        zk
+          # Zettelkasten cli tool
+          zk
 
-        # Lua external formatter
-        stylua
-      ] ++ optionals cfg.includeFonts [
-        # Fonts
-        nerdfonts
-      ];
+          # Lua external formatter
+          stylua
+        ]
+        ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
+
     };
 
     fonts.fontconfig.enable = cfg.includeFonts;

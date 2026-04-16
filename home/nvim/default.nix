@@ -6,6 +6,9 @@ with lib;
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
+    withPython3 = false;
+    withRuby = false;
+    withNodeJs = false;
 
     plugins = with pkgs.vimPlugins; [
       # File explorer
@@ -13,7 +16,6 @@ with lib;
 
       # Quick actions fuzzy
       telescope-nvim
-      commander-nvim
 
       # Enable passing through ripgrep flags from telescope
       telescope-live-grep-args-nvim
@@ -40,7 +42,6 @@ with lib;
       cmp-nvim-lsp-signature-help
       nvim-cmp
       lspkind-nvim
-      luasnip
 
       # Smooth scrolling
       vim-smoothie
@@ -79,12 +80,15 @@ with lib;
       # more precise word traversal, so stuff like camelCase and PascalCase and snake_case will let
       # me move through them as I expect to be able to using w/b/e (hint, use this comment as a
       # test of the capabilities of the movement, the leader for the more precise moment is
-      # currently `,` aka comma. If this doesn't work maybe check the plugin init file and update 
+      # currently `,` aka comma. If this doesn't work maybe check the plugin init file and update
       # this comment if it is wrong here)
       vim-wordmotion
 
       # renders markdown files in the browser
       markdown-preview-nvim
+
+      # evaluating
+      krust-nvim # better rust diagnostics formatting in an overlay window
     ];
 
     extraPackages = with pkgs; [

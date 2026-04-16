@@ -11,5 +11,4 @@ vimUtils.buildVimPlugin {
     sha256 = "sha256-uJ4LxczgWl4aQCFuG4cR+2zwhNo7HB6R7ZPTdgjvyfY=";
 
   };
-  meta.homepage = "https://github.com/FeiyouG/commander.nvim";
 }

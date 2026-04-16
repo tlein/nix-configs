@@ -14,13 +14,12 @@ require('core/autocmds')
 
 ------------------------------------------
 -- Load plugin settings
+require('plugins/telescope')
 require('plugins/vim-wordmotion')
 require('plugins/lsp-config')
 require('plugins/nvim-treesitter')
 require('plugins/nvim-tree')
-require('plugins/telescope')
 require('plugins/fidget')
-require('plugins/commander')
 require('plugins/catppuccin')
 require('plugins/lualine')
 require('plugins/nvim-notify')
@@ -32,6 +31,7 @@ require('plugins/auto-dark-mode')
 require('plugins/nvim-cursorline')
 require('plugins/lsp_lines')
 require('plugins/indent-blankline')
+require('plugins/krust')
 
 vim.defer_fn(function()
   local current_background = vim.api.nvim_get_option_value('background', {})

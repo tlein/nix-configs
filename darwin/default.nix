@@ -22,20 +22,8 @@ in
   };
 
   config = {
-    # Make sure nix always runs in multi-user mode on Mac
-    services.nix-daemon.enable = true;
-
     nix = {
-      package = pkgs.nixStable;
-      # Add cache for nix-community, used mainly for neovim nightly
-      settings = {
-        substituters = [ "https://nix-community.cachix.org" ];
-        trusted-public-keys = [
-          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        ];
-      };
-      # Enable Flakes
-      extraOptions = "experimental-features = nix-command flakes";
+      enable = false;
     };
 
     # Create /etc/zshrc that loads the nix-darwin environment.
@@ -47,7 +35,7 @@ in
       promptInit = "";
     };
 
-    security.pam.enableSudoTouchIdAuth = cfg.enableSudoTouch;
+    security.pam.services.sudo_local.touchIdAuth = cfg.enableSudoTouch;
 
     # Used for backwards compatibility, please read the changelog before changing.
     # $ darwin-rebuild changelog

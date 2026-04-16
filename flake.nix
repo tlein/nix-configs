@@ -26,53 +26,66 @@
       url = "github:nix-community/neovim-nightly-overlay";
     };
   };
-  outputs = inputs@{ self, nixpkgs, darwin, flake-parts, ... }:
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      darwin,
+      flake-parts,
+      ...
+    }:
     let
       nixpkgsConfig = with inputs; {
         config = {
           allowUnfree = true;
         };
         overlays = [
-          inputs.neovim-nightly-overlay.overlays.default
+          # uncomment for nightly neovim!
+          # inputs.neovim-nightly-overlay.overlays.default
           # "pkgs" currently points to unstable
           # The following overlay allows you to specify "pkgs.stable" for stable versions
           # and "pkgs.master" for versions on master
           (
             final: prev:
-              let
-                inherit (prev.stdenv) system;
-                nixpkgs-stable = if system == "x86_64-darwin" || system == "aarch64-darwin" then nixpkgs-stable-darwin else nixos-stable;
-              in
-              {
-                master = nixpkgs-master.legacyPackages.${system};
-                stable = nixpkgs-stable.legacyPackages.${system};
-              }
+            let
+              inherit (prev.stdenv) system;
+              nixpkgs-stable =
+                if system == "x86_64-darwin" || system == "aarch64-darwin" then
+                  nixpkgs-stable-darwin
+                else
+                  nixos-stable;
+            in
+            {
+              master = nixpkgs-master.legacyPackages.${system};
+              stable = nixpkgs-stable.legacyPackages.${system};
+            }
           )
           # Add in custom defined packages in the pkgs directory
-          (
-            final: prev: { flake = self; } // import ./pkgs final prev
-          )
+          (final: prev: { flake = self; } // import ./pkgs final prev)
         ];
       };
-      darwinModules = { user, host }: with inputs; [
-        # Main `nix-darwin` config
-        (./. + "/hosts/${host}/configuration.nix")
-        # `home-manager` module
-        home-manager.darwinModules.home-manager
-        {
-          nixpkgs = nixpkgsConfig;
-          # Pins channels and flake registry to use the same nixpkgs as this flake.
-          nix.registry = nixpkgs.lib.mapAttrs (_: value: { flake = value; }) inputs;
-          # `home-manager` config
-          users.users.${user}.home = "/Users/${user}";
-          home-manager = {
-            useGlobalPkgs = true;
-            users.${user} = import (./. + "/hosts/${host}/home.nix");
-            sharedModules = [
-            ];
-          };
-        }
-      ];
+      darwinModules =
+        { user, host }:
+        with inputs;
+        [
+          # Main `nix-darwin` config
+          (./. + "/hosts/${host}/configuration.nix")
+          # `home-manager` module
+          home-manager.darwinModules.home-manager
+          {
+            nixpkgs = nixpkgsConfig;
+            # Pins channels and flake registry to use the same nixpkgs as this flake.
+            nix.registry = nixpkgs.lib.mapAttrs (_: value: { flake = value; }) inputs;
+            # `home-manager` config
+            users.users.${user}.home = "/Users/${user}";
+            home-manager = {
+              useGlobalPkgs = true;
+              users.${user} = import (./. + "/hosts/${host}/home.nix");
+              sharedModules = [
+              ];
+            };
+          }
+        ];
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
@@ -89,10 +102,24 @@
           };
         };
       };
-      systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
-      perSystem = { config, self', inputs', pkgs, system, ... }: {
-        devShells.default = {
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
+      perSystem =
+        {
+          config,
+          self',
+          inputs',
+          pkgs,
+          system,
+          ...
+        }:
+        {
+          devShells.default = {
+          };
         };
-      };
     };
 }
